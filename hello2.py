@@ -18,6 +18,10 @@ def render_ftoc():
 @app.route('/mtokm')
 def render_mtokm():
     return render_template('mtokm.html')
+
+@app.route('/testit')
+def render_testit():
+    return render_template('testit.html')
     
 @app.route('/ftoc_result')
 def render_ftoc_result():
@@ -26,7 +30,7 @@ def render_ftoc_result():
         ctemp_result = ftoc(ftemp_result)
         return render_template('ftoc_result.html', fTemp=ftemp_result, cTemp=ctemp_result)
     except ValueError:
-        return "Sorry: something went wro)ng."
+        return "Sorry: something went wrong."
 
 @app.route('/ctof_result')
 def render_ctof_result():
