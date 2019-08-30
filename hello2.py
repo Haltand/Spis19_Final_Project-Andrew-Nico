@@ -22,6 +22,10 @@ def render_mtokm():
 @app.route('/testit')
 def render_testit():
     return render_template('testit.html')
+
+@app.route('/about')
+def render_about():
+    return render_template('about.html')
     
 @app.route('/ftoc_result')
 def render_ftoc_result():
