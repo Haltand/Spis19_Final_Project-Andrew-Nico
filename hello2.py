@@ -1,7 +1,13 @@
 import os
 from flask import Flask, url_for, render_template, request
+import praw
 
 app = Flask(__name__)
+
+reddit = praw.Reddit(client_id='Q9UV2ZsbXF0K3w',
+                     client_secret='DSh_JRQi563PWGayN1BHWmV89M8',
+                     redirect_uri='http://secret-cove-59920.herokuapp.com/',
+                     user_agent='SaltyGhio')
 
 @app.route('/')
 def render_main():
@@ -53,6 +59,12 @@ def render_mtokm_result():
         return render_template('mtokm_result.html', miledist=miledist_result, kilodist=kilodist_result )
     except ValueError:
         return "Sorry: something went wrong."
+
+@app.route('/testit')
+def checksubredtitles():
+    for submission in reddit.subreddit('ucsd').hot(limit=10):
+        print(submission.url)
+        print('\n')
 
 def ftoc(ftemp):
    return (ftemp-32.0)*(5.0/9.0)
