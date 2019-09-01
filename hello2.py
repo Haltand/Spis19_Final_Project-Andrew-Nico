@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 reddit = praw.Reddit(client_id='Q9UV2ZsbXF0K3w',
                      client_secret='DSh_JRQi563PWGayN1BHWmV89M8',
-                     redirect_uri='http://secret-cove-59920.herokuapp.com/',
+                     redirect_uri='http://secret-cove-59920.herokuapp.com/testit_result',
                      user_agent='SaltyGhio')
 
 @app.route('/')
@@ -37,9 +37,10 @@ def render_ftoc_result():
 @app.route('/testit_result')
 def checksubredtitles():
     for submission in reddit.subreddit('ucsd').hot(limit=1):
-        firstprint = print(submission.title)
-        return render_template('testit_result.html', testresult = firstprint)
-
+        firstprint = submission.title
+        secondprint = reddit.auth.url(['identity'], '...', 'permanent')
+        
+        return render_template('testit_result.html', testresult = firstprint, authurl=secondprint)
 
 def ftoc(ftemp):
    return (ftemp-32.0)*(5.0/9.0)
