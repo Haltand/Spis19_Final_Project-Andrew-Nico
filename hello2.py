@@ -38,9 +38,9 @@ def render_ftoc_result():
 def checksubredtitles():
     for submission in reddit.subreddit('ucsd').hot(limit=1):
         firstprint = submission.title
-        secondprint = reddit.auth.url(['identity'], '...', 'permanent')
+        secondprint = reddit.user.me()
         
-        return render_template('testit_result.html', testresult = firstprint, authurl=secondprint)
+        return render_template('testit_result.html', whothetoken = firstprint, whotheuser=secondprint)
 
 def ftoc(ftemp):
    return (ftemp-32.0)*(5.0/9.0)
