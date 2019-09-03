@@ -13,10 +13,6 @@ reddit = praw.Reddit(client_id='Q9UV2ZsbXF0K3w',
 def render_main():
     return render_template('home.html')
 
-@app.route('/ftoc')
-def render_ftoc():
-    return render_template('ftoc.html')
-
 @app.route('/testit')
 def render_testit():
     return render_template('testit.html')
@@ -24,15 +20,6 @@ def render_testit():
 @app.route('/about')
 def render_about():
     return render_template('about.html')
-    
-@app.route('/ftoc_result')
-def render_ftoc_result():
-    try:
-        ftemp_result = float(request.args['fTemp'])
-        ctemp_result = ftoc(ftemp_result)
-        return render_template('ftoc_result.html', fTemp=ftemp_result, cTemp=ctemp_result)
-    except ValueError:
-        return "Sorry: something went wrong."
 
 @app.route('/testit_result')
 def checksubredtitles():
@@ -41,12 +28,6 @@ def checksubredtitles():
         secondprint = reddit.user.me()
         
         return render_template('testit_result.html', whothetoken = firstprint, whotheuser=secondprint)
-
-def ftoc(ftemp):
-   return (ftemp-32.0)*(5.0/9.0)
-    
-def ctof(ctemp):
-   return (ctemp*(9.0/5.0) + 32.0) # replace with correct formula
     
 if __name__=="__main__":
     app.run(debug=False, port=54321)
