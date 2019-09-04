@@ -3,9 +3,10 @@
 {%  block title %}First title of the subreddit:{%  endblock %}
 
 {%  block content %}
-<p>User: {{whotheuser}}</p>
-<p>Refresh token: {{whothetoken}}</p>
-<!--<p>Authorize: <a href='https://www.reddit.com/api/v1/authorize?client_id=Q9UV2ZsbXF0K3w&duration=permanent&redirect_uri=http%3A%2F%2Fsecret-cove-59920.herokuapp.com%2Ftestit_result&response_type=code&scope=identity&state=...'>{{authurl}}</a></a></p>-->
+
+<button type ="button" onclick="window.location.href = '/username_callback'">Username</button>
+<button type ="button" onclick="window.location.href = '/subredditkarma_callback'">Subreddit karma</button>
+<button type ="button" onclick="window.location.href = '/history_callbackS'">History</button>
 
 {%  endblock %}
 
