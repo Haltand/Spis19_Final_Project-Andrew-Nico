@@ -1,5 +1,6 @@
-from flask import Flask, abort, request
+from flask import Flask, abort, request, url_for, render_template
 from uuid import uuid4
+import os
 import requests
 import requests.auth
 import urllib
@@ -17,13 +18,26 @@ def user_agent():
 def base_headers():
     return {"User-Agent": user_agent()}
 
-
 app = Flask(__name__)
+
+@app.route('/')
+def render_main():
+    return render_template('home.html')
+
+#@app.route('/testit')
+#def render_testit():
+#    return render_template('testit.html')
+
+@app.route('/about')
+def render_about():
+    return render_template('about.html')
+
 @app.route('/testit')
-#  
-def homepage():
-    text = '<a href ="%s">Authenticate with Reddit</a>'
-    return text % make_authorization_url() 
+#This part returns a text with link to authorize
+#def homepage():
+#    text = '<a href ="%s">Authenticate with Reddit</a>'
+#    return text % make_authorization_url()
+
 
 def make_authorization_url():
     #uuid = universal unique identifier
@@ -34,10 +48,11 @@ def make_authorization_url():
                     "response_type": "code",
                     "redirect_uri": REDIRECT_URI,
                     "duration": "permanent",
-                    "scope": "identity",
+                    "scope": "identity " + "save " + "history",
                     "state": state}
     url = "https://reddit.com/api/v1/authorize?" + urllib.parse.urlencode(params)
-    return url    
+    #Sends the data to the testit webpage with auth storing the authorize url
+    return render_template('testit.html', auth = url)    
 
 def save_created_state(state):
     pass
