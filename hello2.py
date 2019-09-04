@@ -9,7 +9,7 @@ import json
 
 CLIENT_ID = "Q9UV2ZsbXF0K3w"
 CLIENT_SECRET = "DSh_JRQi563PWGayN1BHWmV89M8"
-REDIRECT_URI = "http://localhost:5000/testit_callback"
+REDIRECT_URI = "http://localhost:5000/subredditkarma_callback"
 
 def user_agent():
     return "oauth2-owncheck by /u/spis19av"
@@ -32,12 +32,15 @@ def render_main():
 def render_about():
     return render_template('about.html')
 
+@app.route('/testit_callback')
+def render_testit_callback():
+    render_template('/testit_callback.html')
+
 @app.route('/testit')
 #This part returns a text with link to authorize
 #def homepage():
 #    text = '<a href ="%s">Authenticate with Reddit</a>'
 #    return text % make_authorization_url()
-
 
 def make_authorization_url():
     #uuid = universal unique identifier
@@ -60,7 +63,7 @@ def is_valid_state(state):
     return True
 
 @app.route('/subredditkarma_callback')
-def testit_callback():
+def karma_callback():
     error = request.args.get('error', '')
     if error:
         return "Error: " + error
@@ -69,11 +72,12 @@ def testit_callback():
         abort(403)
     code = request.args.get('code')
     access_token = get_token(code)
+    karmascore = get_karma(access_token)
     
-    return "Your karma scores are: %s" %get_karma(access_token)
+    return render_template('subredditkarma_callback.html', karmascore = karmascore)
 
 @app.route('/username_callback')
-def testit_callback():
+def username_callback():
     error = request.args.get('error', '')
     if error:
         return "Error: " + error
@@ -82,8 +86,9 @@ def testit_callback():
         abort(403)
     code = request.args.get('code')
     access_token = get_token(code)
-    
-    return "Your reddit username is: %s" %get_username(access_token)
+    username = get_username(access_token)
+
+    return render_template('username_callback.html', username = username)
 
 #function that gets access code using code granted from user's grant of permission on reddit
 def get_token(code):
