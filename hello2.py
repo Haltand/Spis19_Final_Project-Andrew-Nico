@@ -9,7 +9,7 @@ import json
 
 CLIENT_ID = "Q9UV2ZsbXF0K3w"
 CLIENT_SECRET = "DSh_JRQi563PWGayN1BHWmV89M8"
-REDIRECT_URI = "http://secret-cove-59920.herokuapp.com/testit_callback"
+REDIRECT_URI = "http://localhost:5000/testit_callback"
 
 def user_agent():
     return "oauth2-owncheck by /u/spis19av"
@@ -48,7 +48,7 @@ def make_authorization_url():
                     "response_type": "code",
                     "redirect_uri": REDIRECT_URI,
                     "duration": "permanent",
-                    "scope": "identity " + "save " + "history",
+                    "scope": "identity " + "save " + "history " + "mysubreddits",
                     "state": state}
     url = "https://reddit.com/api/v1/authorize?" + urllib.parse.urlencode(params)
     #Sends the data to the testit webpage with auth storing the authorize url
@@ -59,7 +59,20 @@ def save_created_state(state):
 def is_valid_state(state):
     return True
 
-@app.route('/testit_callback')
+@app.route('/subredditkarma_callback')
+def testit_callback():
+    error = request.args.get('error', '')
+    if error:
+        return "Error: " + error
+    state = request.args.get('state', '')
+    if not is_valid_state(state):
+        abort(403)
+    code = request.args.get('code')
+    access_token = get_token(code)
+    
+    return "Your karma scores are: %s" %get_karma(access_token)
+
+@app.route('/username_callback')
 def testit_callback():
     error = request.args.get('error', '')
     if error:
@@ -92,6 +105,13 @@ def get_username(access_token):
     response = requests.get("https://oauth.reddit.com/api/v1/me", headers = headers)
     me_json = response.json()
     return me_json['name']
+
+def get_karma(access_token):
+    headers = base_headers()
+    headers.update({"Authorization": "bearer " + access_token})
+    response = requests.get("https://oauth.reddit.com/api/v1/me/karma", headers = headers)
+    me_json = response.json()
+    return me_json['data']
 
 if __name__ == "__main__":
     app.run(debug=False, port=54321)
