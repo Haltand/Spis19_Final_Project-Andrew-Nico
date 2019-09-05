@@ -112,7 +112,7 @@ def get_karma(access_token):
     headers.update({"Authorization": "bearer " + access_token})
     response = requests.get("https://oauth.reddit.com/user/haltand/saved", headers = headers)
     me_json = str(response.json())
-    urlsearch = re.compile(r'[w][w][w][.][r][e][d][d][i][t][.][c][o][m][/][r][/][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_]')
+    urlsearch = re.compile(r'[w][w][w][.][r][e][d][d][i][t][.][c][o][m][/][r][/][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_]')
     urlresults = urlsearch.search(me_json)
     return ('The urls are: ' + urlresults.group())
 
