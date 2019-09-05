@@ -1,4 +1,11 @@
 body {
-    background-color: #orange;
-    color: black;
+    background-color: orange;
+    color: #000000;
+    font-size: 18px;
+    line-height: 2;
+    font-family: 'Times New Roman', Times, serif
+}
+
+#content{
+    background-color: orange;
 }
