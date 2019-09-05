@@ -110,12 +110,12 @@ def get_username(access_token):
 def get_karma(access_token):
     headers = base_headers()
     headers.update({"Authorization": "bearer " + access_token})
-    response = requests.get("https://oauth.reddit.com/user/haltand/saved", headers = headers)
+    response = requests.get("https://oauth.reddit.com/user/spis19av/saved", headers = headers)
     me_json = str(response.json())
-    urlsearch = re.compile(r'[w][w][w][.][r][e][d][d][i][t][.][c][o][m][/][r][/][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_]')
-    urlresults = urlsearch.search(me_json)
-    return ('The url is: ' + urlresults.group())
-
+    urlsearch = re.compile("'https://www.reddit.com(?:.*?)',")
+    urlresults = urlsearch.findall(me_json)
+    return urlresults
+    #return response.json()
 
 
 #me_json configure only print urls
