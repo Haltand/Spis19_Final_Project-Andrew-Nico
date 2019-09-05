@@ -1,5 +1,5 @@
 body {
-    background-color: orange;
+    background-color: deepskyblue;
     color: #000000;
     font-size: 18px;
     line-height: 2;
@@ -8,4 +8,8 @@ body {
 
 #content{
     background-color: orange;
+}
+
+.topbar-selections{
+    color: navy;
 }
