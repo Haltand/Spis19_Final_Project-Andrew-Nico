@@ -10,7 +10,7 @@ import re
 
 CLIENT_ID = "Q9UV2ZsbXF0K3w"
 CLIENT_SECRET = "DSh_JRQi563PWGayN1BHWmV89M8"
-REDIRECT_URI = "http://http://secret-cove-59920.herokuapp.com/subredditkarma_callback"
+REDIRECT_URI = "http://secret-cove-59920.herokuapp.com/subredditkarma_callback"
 
 def user_agent():
     return "oauth2-owncheck by /u/spis19av"
