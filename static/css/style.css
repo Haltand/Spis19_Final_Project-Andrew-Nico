@@ -3,7 +3,7 @@ body {
     color: #000000;
     font-size: 18px;
     line-height: 2;
-    font-family: 'Times New Roman', Times, serif
+    font-family: 'Times New Roman', Times, serif;
 }
 
 #content{
@@ -12,4 +12,8 @@ body {
 
 .topbar-selections{
     color: navy;
+}
+
+.center{
+    text-align: center;
 }
