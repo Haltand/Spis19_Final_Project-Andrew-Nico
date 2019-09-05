@@ -6,10 +6,11 @@ import requests.auth
 import urllib
 import urllib.parse
 import json
+import re
 
 CLIENT_ID = "Q9UV2ZsbXF0K3w"
 CLIENT_SECRET = "DSh_JRQi563PWGayN1BHWmV89M8"
-REDIRECT_URI = "http://localhost:5000/subredditkarma_callback"
+REDIRECT_URI = "http://secret-cove-59920.herokuapp.com/subredditkarma_callback"
 
 def user_agent():
     return "oauth2-owncheck by /u/spis19av"
@@ -37,11 +38,6 @@ def render_testit_callback():
     render_template('/testit_callback.html')
 
 @app.route('/testit')
-#This part returns a text with link to authorize
-#def homepage():
-#    text = '<a href ="%s">Authenticate with Reddit</a>'
-#    return text % make_authorization_url()
-
 def make_authorization_url():
     #uuid = universal unique identifier
     #Creates a unique string for each authorization request
@@ -114,9 +110,16 @@ def get_username(access_token):
 def get_karma(access_token):
     headers = base_headers()
     headers.update({"Authorization": "bearer " + access_token})
-    response = requests.get("https://oauth.reddit.com/api/v1/me/karma", headers = headers)
-    me_json = response.json()
-    return me_json['data']
+    response = requests.get("https://oauth.reddit.com/user/haltand/saved", headers = headers)
+    me_json = str(response.json())
+    urlsearch = re.compile(r'[w][w][w][.][r][e][d][d][i][t][.][c][o][m][/][r][/][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_][a-z|0-9|/|_]')
+    urlresults = urlsearch.search(me_json)
+    return ('The urls are: ' + urlresults.group())
+
+
+
+#me_json configure only print urls
+   
 
 if __name__ == "__main__":
     app.run(debug=False, port=54321)
