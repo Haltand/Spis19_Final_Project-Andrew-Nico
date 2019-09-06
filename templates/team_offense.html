@@ -1,0 +1,15 @@
+{%  extends "layout.html" %}
+
+{%  block title %}Get Team Offense Stats{%  endblock %}
+
+{%  block content %}
+
+<p>Enter a School to get Stats</p>
+
+<form action="/team_offense_result">
+  School/University Name:<br>
+  <input type="text" name="school" value="UCLA">
+  <input type="submit" value="Submit">
+</form>
+
+{%  endblock %}

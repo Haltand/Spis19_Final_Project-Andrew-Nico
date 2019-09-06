@@ -7,6 +7,9 @@ import urllib
 import urllib.parse
 import json
 import re
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
+import pandas as pd
 
 CLIENT_ID = "Q9UV2ZsbXF0K3w"
 CLIENT_SECRET = "DSh_JRQi563PWGayN1BHWmV89M8"
@@ -119,7 +122,66 @@ def get_karma(access_token):
 
 
 #me_json configure only print urls
-   
+
+
+@app.route('/teamoffense')
+def render_teamOffense():
+    return render_template('team_offense.html')
+
+@app.route('/team_offense_result')
+def render_team_offense_result():
+    try:
+        offense_result = request.args['school']
+        attack_result = getOffenseStats(offense_result)
+        return render_template('team_offense_result.html', attack_form = attack_result)
+    except ValueError:
+        return "Sorry: invalid team"
+
+def getOffenseStats(school): 
+    url = "https://www.sports-reference.com/cfb/years/2018-team-offense.html"
+    html = urlopen(url)
+    soup = BeautifulSoup(html, features='html.parser')
+    soup.findAll('tr')
+    tableHead = [th.getText() for th in soup.findAll('tr')[1].findAll('th')]
+    otherTableHead = [th.getText() for th in soup.findAll('tr')[0].findAll('th')]
+    tableHead = tableHead[1:]
+    #print(otherTableHead)
+    rows = soup.findAll('tr')[1:]
+    teamStats = [[td.getText() for td in rows[i].findAll('td')] for i in range(len(rows))]
+    stats = pd.DataFrame(teamStats, columns = tableHead)
+    #print(stats)
+    statsCols = stats.columns
+    statsSize = stats.size
+    name = school
+    statsRows = int(statsSize//len(statsCols))
+    while statsRows > 0:
+        statsRows -= 1
+        university = stats.loc[statsRows]['School']
+        if university != None and university == name:
+            index = 0
+            string = ""
+            string += otherTableHead[index]
+            index += 1
+            string += str(stats.iloc[statsRows,0:3])+"/\/\/\/\/\/\/\/\/"
+            string += otherTableHead[index] +"\n"
+            index += 1
+            string += str(stats.iloc[statsRows,3:8])+"/\/\/\/\/\/\/\/\/"
+            string += otherTableHead[index] +"\n"
+            index += 1
+            string += str(stats.iloc[statsRows,8:12])+"/\/\/\/\/\/\/\/\/"
+            string += otherTableHead[index] +"\n"
+            index += 1
+            string += str(stats.iloc[statsRows,12:15])+"/\/\/\/\/\/\/\/\/"
+            string += otherTableHead[index] +"\n"
+            index += 1
+            string += str(stats.iloc[statsRows,15:19])+"/\/\/\/\/\/\/\/\/"
+            string += otherTableHead[index] +"\n"
+            index += 1
+            string += str(stats.iloc[statsRows,19:21])+"/\/\/\/\/\/\/\/\/"
+            string += otherTableHead[index]+"\n"
+            string += str(stats.iloc[statsRows,21:len(tableHead)])
+            return string
+getOffenseStats("UCLA")
 
 if __name__ == "__main__":
     app.run(debug=False, port=54321)
