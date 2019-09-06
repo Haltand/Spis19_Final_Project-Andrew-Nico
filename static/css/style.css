@@ -12,9 +12,20 @@ body {
 
 .navbar-nav{
     border: 1px outset blue;
-    width: 100px;
 }
 
 .center{
     text-align: center;
+}
+
+.topbar-selections-home{
+    border: 1px outset blue;
+}
+
+.topbar-selections-one{
+    border: 1px outset blue;
+}
+
+.topbar-selections-two{
+    border: 1px outset blue;
 }
