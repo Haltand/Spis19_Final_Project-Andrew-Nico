@@ -11,7 +11,8 @@ body {
 }
 
 .topbar-selections{
-    color: navy;
+    border: 1px outset blue;
+    width: 100px;
 }
 
 .center{
