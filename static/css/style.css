@@ -10,7 +10,7 @@ body {
     background-color: orange;
 }
 
-.topbar-selections{
+.navbar-nav{
     border: 1px outset blue;
     width: 100px;
 }
