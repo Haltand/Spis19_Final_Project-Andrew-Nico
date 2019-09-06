@@ -1,5 +1,7 @@
 body {
-    background-color: deepskyblue;
+    background-image: url("https://eigenfoo.xyz/assets/images/cool-backgrounds/cool-background8.png");
+    background-size: cover;
+    background-repeat: no-repeat;
     color: #000000;
     font-size: 18px;
     line-height: 2;
